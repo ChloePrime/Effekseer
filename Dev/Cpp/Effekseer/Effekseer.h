@@ -2310,6 +2310,9 @@ enum class TextureFormatType
 
 	//! You don't need to implement DepthTexture for a runtime
 	D32S8,
+	
+	//! Yay Mojang, haha
+	GL_LEGACY_DEPTH,
 	Unknown,
 };
 
@@ -2317,7 +2320,8 @@ inline bool IsDepthTextureFormat(TextureFormatType format)
 {
 	return format == TextureFormatType::D24S8 ||
 		   format == TextureFormatType::D32S8 ||
-		   format == TextureFormatType::D32;
+		   format == TextureFormatType::D32 ||
+		   format == TextureFormatType::GL_LEGACY_DEPTH;
 }
 
 enum class IndexBufferStrideType

@@ -595,7 +595,8 @@ namespace EffekseerRendererGL
 ::Effekseer::MaterialLoaderRef CreateMaterialLoader(Effekseer::Backend::GraphicsDeviceRef graphicsDevice,
 													::Effekseer::FileInterfaceRef fileInterface = nullptr);
 
-Effekseer::Backend::TextureRef CreateTexture(Effekseer::Backend::GraphicsDeviceRef graphicsDevice, GLuint buffer, bool hasMipmap, const std::function<void()>& onDisposed);
+Effekseer::Backend::TextureRef CreateTexture(Effekseer::Backend::GraphicsDeviceRef graphicsDevice, GLuint buffer, bool hasMipmap, const std::function<void()>& onDisposed,
+	Effekseer::Backend::TextureFormatType format = Effekseer::Backend::TextureFormatType::R8G8B8A8_UNORM);
 
 /**
 		@brief	\~English	Properties in a texture

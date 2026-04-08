@@ -684,6 +684,11 @@ bool Texture::Init(const Effekseer::Backend::DepthTextureParameter& param)
 		format = GL_DEPTH_COMPONENT;
 		internalFormat = GL_DEPTH_COMPONENT32;
 	}
+	else if (param.Format == Effekseer::Backend::TextureFormatType::GL_LEGACY_DEPTH)
+	{
+		format = GL_DEPTH_COMPONENT;
+		internalFormat = GL_DEPTH_COMPONENT;
+	}
 	else
 	{
 		return false;
@@ -733,7 +738,7 @@ bool Texture::Init(const Effekseer::Backend::DepthTextureParameter& param)
 	return true;
 }
 
-bool Texture::Init(GLuint buffer, bool hasMipmap, const std::function<void()>& onDisposed)
+bool Texture::Init(GLuint buffer, bool hasMipmap, const std::function<void()>& onDisposed, const Effekseer::Backend::TextureFormatType format)
 {
 	if (buffer == 0)
 		return false;
@@ -742,7 +747,7 @@ bool Texture::Init(GLuint buffer, bool hasMipmap, const std::function<void()>& o
 	onDisposed_ = onDisposed;
 
 	// TODO : make correct
-	param_.Format = Effekseer::Backend::TextureFormatType::R8G8B8A8_UNORM;
+	param_.Format = format;
 	param_.Dimension = 2;
 	param_.Size = {1, 1, 1};
 	param_.MipLevelCount = hasMipmap ? 2 : 1;
@@ -1673,11 +1678,12 @@ bool GraphicsDevice::UpdateUniformBuffer(Effekseer::Backend::UniformBufferRef& b
 	return true;
 }
 
-Effekseer::Backend::TextureRef GraphicsDevice::CreateTexture(GLuint buffer, bool hasMipmap, const std::function<void()>& onDisposed)
+Effekseer::Backend::TextureRef GraphicsDevice::CreateTexture(GLuint buffer, bool hasMipmap, const std::function<void()>& onDisposed,
+	const Effekseer::Backend::TextureFormatType format)
 {
 	auto ret = Effekseer::MakeRefPtr<Texture>(this);
 
-	if (!ret->Init(buffer, hasMipmap, onDisposed))
+	if (!ret->Init(buffer, hasMipmap, onDisposed, format))
 	{
 		return nullptr;
 	}

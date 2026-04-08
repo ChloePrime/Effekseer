@@ -193,7 +193,8 @@ public:
 
 	bool Init(const Effekseer::Backend::DepthTextureParameter& param);
 
-	bool Init(GLuint buffer, bool hasMipmap, const std::function<void()>& onDisposed);
+	bool Init(GLuint buffer, bool hasMipmap, const std::function<void()>& onDisposed
+		, Effekseer::Backend::TextureFormatType format = Effekseer::Backend::TextureFormatType::R8G8B8A8_UNORM);
 
 	GLuint GetBuffer() const
 	{
@@ -408,7 +409,8 @@ public:
 		return "OpenGL";
 	}
 
-	Effekseer::Backend::TextureRef CreateTexture(GLuint buffer, bool hasMipmap, const std::function<void()>& onDisposed);
+	Effekseer::Backend::TextureRef CreateTexture(GLuint buffer, bool hasMipmap, const std::function<void()>& onDisposed
+		, Effekseer::Backend::TextureFormatType format = Effekseer::Backend::TextureFormatType::R8G8B8A8_UNORM);
 };
 
 } // namespace Backend

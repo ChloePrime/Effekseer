@@ -67,10 +67,11 @@ namespace EffekseerRendererGL
 	return ::Effekseer::MakeRefPtr<MaterialLoader>(graphicsDevice.DownCast<Backend::GraphicsDevice>(), fileInterface);
 }
 
-Effekseer::Backend::TextureRef CreateTexture(Effekseer::Backend::GraphicsDeviceRef graphicsDevice, GLuint buffer, bool hasMipmap, const std::function<void()>& onDisposed)
+Effekseer::Backend::TextureRef CreateTexture(Effekseer::Backend::GraphicsDeviceRef graphicsDevice, GLuint buffer, bool hasMipmap, const std::function<void()>& onDisposed,
+	const Effekseer::Backend::TextureFormatType format)
 {
 	auto gd = graphicsDevice.DownCast<Backend::GraphicsDevice>();
-	return gd->CreateTexture(buffer, hasMipmap, onDisposed);
+	return gd->CreateTexture(buffer, hasMipmap, onDisposed, format);
 }
 
 TextureProperty GetTextureProperty(::Effekseer::Backend::TextureRef texture)
