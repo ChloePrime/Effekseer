@@ -57,3 +57,17 @@ Dev/release/resources/icons/Copy.png
 Dev/release/resources/icons/Paste.png
 
 Tool/fbxsdk
+
+# Chloe's Extras
+.idea/
+
+*.cmake
+CMakeCache.txt
+CMakeFiles/
+
+*.vcxproj
+*.vcxproj.filters
+*.sln
+
+x64/
+**.dir/
