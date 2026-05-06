@@ -397,7 +397,9 @@ private:
 		if (c == '\n') return true;
 		if (c == '\t') return true;
 		if (c == ' ') return true;
+#if !defined(__APPLE__)
 		if (c == '　') return true;
+#endif
 		return false;
 	}
 
