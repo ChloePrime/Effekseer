@@ -34,6 +34,15 @@ set_target_properties(${PROJECT_NAME} PROPERTIES PUBLIC_HEADER
                                                  "${PublicHeader}")
 target_link_libraries(${PROJECT_NAME} PUBLIC Effekseer EffekseerRendererCommon)
 
+if(NOT WIN32)
+  find_package(OpenGL REQUIRED)
+  target_link_libraries(
+    EffekseerRendererGL
+    PUBLIC
+    ${OPENGL_LIBRARIES}
+  )
+endif()
+
 target_include_directories(
   ${PROJECT_NAME} PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
                          $<INSTALL_INTERFACE:include>)
