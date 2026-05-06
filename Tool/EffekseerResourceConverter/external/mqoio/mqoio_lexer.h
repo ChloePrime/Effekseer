@@ -14,7 +14,7 @@ namespace mqoio
 {
 
 /// <summary>
-/// ƒg[ƒNƒ“‚Ìí—Ş
+/// ãƒˆãƒ¼ã‚¯ãƒ³ã®ç¨®é¡
 /// </summary>
 enum class TokenKind
 {
@@ -47,7 +47,7 @@ enum class TokenKind
 };
 
 /// <summary>
-/// ƒg[ƒNƒ“
+/// ãƒˆãƒ¼ã‚¯ãƒ³
 /// </summary>
 struct Token
 {
@@ -104,22 +104,22 @@ struct Token
 class Lexer
 {
 	/// <summary>
-	/// g—p‹Ö~•¶š
+	/// ä½¿ç”¨ç¦æ­¢æ–‡å­—
 	/// </summary>
 	std::set<char> invalidChar;
 
 	/// <summary>
-	/// 1•¶š
+	/// 1æ–‡å­—
 	/// </summary>
 	std::map<char, TokenKind> ope1;
 
 	/// <summary>
-	/// 2•¶š
+	/// 2æ–‡å­—
 	/// </summary>
 	std::map<std::string_view, TokenKind> ope2;
 
 	/// <summary>
-	/// •¡”•¶š
+	/// è¤‡æ•°æ–‡å­—
 	/// </summary>
 	std::map<std::string_view, TokenKind> opemulti;
 
@@ -149,11 +149,11 @@ public:
 	}
 
 	/// <summary>
-	/// š‹å‰ğÍ
+	/// å­—å¥è§£æ
 	/// </summary>
-	/// <param name="s">ƒR[ƒh</param>
-	/// <param name="err">ƒGƒ‰[</param>
-	/// <returns>ƒg[ƒNƒ“</returns>
+	/// <param name="s">ã‚³ãƒ¼ãƒ‰</param>
+	/// <param name="err">ã‚¨ãƒ©ãƒ¼</param>
+	/// <returns>ãƒˆãƒ¼ã‚¯ãƒ³</returns>
 	std::vector<Token> Parse(const std::vector<char>& s, std::string& err)
 	{
 		std::vector<Token> tokens;
@@ -189,7 +189,7 @@ private:
 
 		for (;;)
 		{
-			// •¶š—ñŠO
+			// æ–‡å­—åˆ—å¤–
 			if (s.size() <= pos) return std::nullopt;
 
 			ch1 = s[pos];
@@ -204,7 +204,7 @@ private:
 			}
 		}
 
-		// ‹Ö‘¥•¶š
+		// ç¦å‰‡æ–‡å­—
 		if (IsInvalidChar(ch1))
 		{
 			std::stringstream ss;
@@ -215,7 +215,7 @@ private:
 
 		if (IsLetterChar(ch1))
 		{
-			// ¯•Ê•¶š—ñ
+			// è­˜åˆ¥æ–‡å­—åˆ—
 			auto _ln = ln;
 			auto _col = col;
 			while ((IsLetterChar(ch1) || IsDigitChar(ch1)) && pos < s.size())
@@ -231,7 +231,7 @@ private:
 		}
 		else if (IsStartEndString(ch1))
 		{
-			// •¶š—ñ
+			// æ–‡å­—åˆ—
 			auto _ln = ln;
 			auto _col = col;
 
@@ -264,7 +264,7 @@ private:
 		}
 		else if (IsNumber(ch1))
 		{
-			// ”’l
+			// æ•°å€¤
 			int _ln = ln;
 			int _col = col;
 			while ((IsDigitChar(ch1) || ch1 == '.' || ch1 == 'e' || ch1 == '-') && pos < s.size())
@@ -278,7 +278,7 @@ private:
 		}
 		else if (IsBinarySizeStart(ch1))
 		{
-			// ƒoƒCƒiƒŠ
+			// ãƒã‚¤ãƒŠãƒª
 			int _ln = ln;
 			int _col = col;
 			NextChar(s, pos, ln, col);
@@ -306,10 +306,10 @@ private:
 		}
 		else
 		{
-			// ‚»‚Ì‘¼
+			// ãã®ä»–
 			if (pos + 1 < s.size())
 			{
-				// 2•¶š‰‰Zq
+				// 2æ–‡å­—æ¼”ç®—å­
 				std::string_view ch(&s[pos], 2);
 
 				if (ope2.find(ch) != ope2.end())
@@ -321,7 +321,7 @@ private:
 				}
 			}
 
-			// 1•¶š‰‰Zq
+			// 1æ–‡å­—æ¼”ç®—å­
 			if (ope1.find(ch1) != ope1.end())
 			{
 				tkn = Token(ope1[ch1], ln, col);
@@ -335,7 +335,7 @@ private:
 			auto& _tkn = tkn.value();
 			if (_tkn.Kind == TokenKind::Letter)
 			{
-				// À‚Í¯•Ê•¶š—ñ‚Í“o˜^Ï‚İ?
+				// å®Ÿã¯è­˜åˆ¥æ–‡å­—åˆ—ã¯ç™»éŒ²æ¸ˆã¿?
 				if (auto it = opemulti.find(_tkn.Letter); it != opemulti.end())
 				{
 					tkn = Token(it->second, _tkn.Line, _tkn.Col);
@@ -348,7 +348,7 @@ private:
 			}
 		}
 
-		// ’m‚ç‚È‚¢•¶š
+		// çŸ¥ã‚‰ãªã„æ–‡å­—
 		{
 			std::stringstream ss;
 			ss << "Unknown char : " << ch1 << " line =" << ln << " col = " << col;
@@ -359,7 +359,7 @@ private:
 	}
 
 	/// <summary>
-	/// Ÿ‚Ì•¶š‚ÉˆÚ“®
+	/// æ¬¡ã®æ–‡å­—ã«ç§»å‹•
 	/// </summary>
 	void NextChar(const std::vector<char>& s, int& pos, int& ln, int& col)
 	{
@@ -376,7 +376,7 @@ private:
 	}
 
 	/// <summary>
-	/// ‹Ö~•¶š‚©?
+	/// ç¦æ­¢æ–‡å­—ã‹?
 	/// </summary>
 	/// <param name="c"></param>
 	/// <returns></returns>
@@ -387,7 +387,7 @@ private:
 	}
 
 	/// <summary>
-	/// –³‹‚Å‚«‚é•¶š‚©?
+	/// ç„¡è¦–ã§ãã‚‹æ–‡å­—ã‹?
 	/// </summary>
 	/// <param name="c"></param>
 	/// <returns></returns>
@@ -397,12 +397,12 @@ private:
 		if (c == '\n') return true;
 		if (c == '\t') return true;
 		if (c == ' ') return true;
-		if (c == '@') return true;
+		if (c == 'ã€€') return true;
 		return false;
 	}
 
 	/// <summary>
-	/// ”’l‚Æ‚µ‚Äˆµ‚¦‚é•¶š‚©?
+	/// æ•°å€¤ã¨ã—ã¦æ‰±ãˆã‚‹æ–‡å­—ã‹?
 	/// </summary>
 	/// <param name="c"></param>
 	/// <returns></returns>
@@ -413,7 +413,7 @@ private:
 	}
 
 	/// <summary>
-	/// ¯•Êq‚Æ‚µ‚Äˆµ‚¦‚é•¶š‚©?
+	/// è­˜åˆ¥å­ã¨ã—ã¦æ‰±ãˆã‚‹æ–‡å­—ã‹?
 	/// </summary>
 	/// <param name="c"></param>
 	/// <returns></returns>
@@ -426,7 +426,7 @@ private:
 	}
 
 	/// <summary>
-	/// •¶š‚ª‘SŠp‚©‚Ç‚¤‚©?
+	/// æ–‡å­—ãŒå…¨è§’ã‹ã©ã†ã‹?
 	/// </summary>
 	/// <param name="c"></param>
 	/// <returns></returns>
@@ -436,7 +436,7 @@ private:
 	}
 
 	/// <summary>
-	/// •¶š‚ªƒAƒ‹ƒtƒ@ƒxƒbƒg‚©‚Ç‚¤‚©H
+	/// æ–‡å­—ãŒã‚¢ãƒ«ãƒ•ã‚¡ãƒ™ãƒƒãƒˆã‹ã©ã†ã‹ï¼Ÿ
 	/// </summary>
 	/// <param name="c"></param>
 	/// <returns></returns>
@@ -446,7 +446,7 @@ private:
 	}
 
 	/// <summary>
-	/// •¶š‚ª”š‚©‚Ç‚¤‚©H
+	/// æ–‡å­—ãŒæ•°å­—ã‹ã©ã†ã‹ï¼Ÿ
 	/// </summary>
 	/// <param name="c"></param>
 	/// <returns></returns>
@@ -456,7 +456,7 @@ private:
 	}
 
 	/// <summary>
-	/// •¶š—ñ‚ÌŠJnI—¹‚©
+	/// æ–‡å­—åˆ—ã®é–‹å§‹çµ‚äº†ã‹
 	/// </summary>
 	/// <param name="c"></param>
 	/// <returns></returns>
